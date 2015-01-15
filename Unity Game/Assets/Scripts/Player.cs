@@ -5,7 +5,8 @@ public class Player : MonoBehaviour {
 
 	public float speed = 10f;
 	public Vector2 maxVelocity = new Vector2(3,5);
-
+	public bool standing;
+	public float jumpSpeed = 15f;
 	// Use this for initialization
 	void Start () {
 	
@@ -17,16 +18,29 @@ public class Player : MonoBehaviour {
 		var forceY = 0f;
 
 		var absVelX = Mathf.Abs (rigidbody2D.velocity.x);
+		var absVelY = Mathf.Abs (rigidbody2D.velocity.y);
 
+		if(absVelY < .2f){
+			standing = true;
+		} else {
+			standing = false;
+		}
 
 		if (Input.GetKey ("right")) {
 			if(absVelX < maxVelocity.x)
 				forceX = speed;
+			// Flipping player back and forth
+			transform.localScale = new Vector3(1,1,1);
 		} else if(Input.GetKey("left") ) { 
 			if(absVelX < maxVelocity.x)
 				forceX = -speed;
+			transform.localScale = new Vector3(-1,1,1);
 		}
 
+		if(Input.GetKey("up")){
+			if(absVelY < maxVelocity.y)
+				forceY = jumpSpeed;
+		}
 		rigidbody2D.AddForce(new Vector2(forceX, forceY));
 	
 	}
