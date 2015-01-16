@@ -7,9 +7,12 @@ public class Player : MonoBehaviour {
 	public Vector2 maxVelocity = new Vector2(3,5);
 	public bool standing;
 	public float jumpSpeed = 15f;
+
+	private Animator animator;
+	
 	// Use this for initialization
 	void Start () {
-	
+		animator = GetComponent<Animator> ();
 	}
 	
 	// Update is called once per frame
@@ -31,10 +34,16 @@ public class Player : MonoBehaviour {
 				forceX = speed;
 			// Flipping player back and forth
 			transform.localScale = new Vector3(1,1,1);
+			
+			animator.SetInteger("AnimState", 1);
 		} else if(Input.GetKey("left") ) { 
 			if(absVelX < maxVelocity.x)
 				forceX = -speed;
 			transform.localScale = new Vector3(-1,1,1);
+			
+			animator.SetInteger("AnimState", 1);
+		} else{
+			animator.SetInteger("AnimState", 0);
 		}
 
 		if(Input.GetKey("up")){
