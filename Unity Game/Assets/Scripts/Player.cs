@@ -29,7 +29,11 @@ public class Player : MonoBehaviour {
 			standing = false;
 		}
 
-		if (Input.GetKey ("right")) {
+		if (Input.GetKey ("up")) {
+			animator.SetInteger("AnimState", 2);
+		}
+
+		else if (Input.GetKey ("right")) {
 			if(absVelX < maxVelocity.x)
 				forceX = speed;
 			// Flipping player back and forth
