@@ -5,8 +5,10 @@ public class Player : MonoBehaviour {
 
 	public float speed = 10f;
 	public Vector2 maxVelocity = new Vector2(3,5);
-	public bool standing;
+	public bool standing = true;
 	public float jumpSpeed = 15f;
+
+//	public float forceY = 0f;
 
 	private Animator animator;
 	
@@ -18,6 +20,7 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		var forceX = 0f;
+
 		var forceY = 0f;
 
 		var absVelX = Mathf.Abs (rigidbody2D.velocity.x);
@@ -25,8 +28,10 @@ public class Player : MonoBehaviour {
 
 		if(absVelY < .2f){
 			standing = true;
+			forceY = 0f;
 		} else {
 			standing = false;
+
 		}
 
 		if (Input.GetKey ("up")) {
@@ -50,10 +55,21 @@ public class Player : MonoBehaviour {
 			animator.SetInteger("AnimState", 0);
 		}
 
-		if(Input.GetKey("up")){
-			if(absVelY < maxVelocity.y)
-				forceY = jumpSpeed;
+
+		if (Input.GetKey ("up")) {
+
+
+			//if(standing == true){
+			
+				if (absVelY < maxVelocity.y){
+						forceY = jumpSpeed;
+		
+				}
+			//}
+
 		}
+
+
 		rigidbody2D.AddForce(new Vector2(forceX, forceY));
 	
 	}
